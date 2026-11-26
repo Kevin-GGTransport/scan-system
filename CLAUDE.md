@@ -116,7 +116,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
   3. **db_identity 自检**：每库一张 `db_identity` 表存身份戳（ERP/DBeaver 建），`getErpDb` 首次取用校验「连到的库 == 声称的 dbKey」，不符抛错拒绝服务（防 DB_INSTANCES key/url 配反写错库；表未建告警放行）
 - 环境变量（与 ERP 同口径同值）：`DB_INSTANCES="OAK仓库=url,SAV仓库=url"`、`DB_WAREHOUSE_MAP="1000=OAK仓库,1=SAV仓库"`；不配退化单库 default+1000（旧行为）。Vercel 需配：`DATABASE_URL`、`DB_INSTANCES`、`DB_WAREHOUSE_MAP`、`NEXTAUTH_SECRET`（trustHost 已开，免 AUTH_URL；secure cookie 随 NODE_ENV 自动切）
 - 坑位记录：cookie 名 `scan-system.session-token`（localhost 与 ERP 同 host 共享 cookie，必须隔离）；TS 模块增强挂 `@auth/core/types` 与 `@auth/core/jwt`（beta.32 的 next-auth/* 只是再导出，需直接依赖同版本 `@auth/core`）
-- **本项目无 git 仓库**——删文件前想清楚，没有历史可回滚
+- 远端仓库 `github.com/Kevin-GGTransport/scan-system`（main，SSH 推送；.env/certs/生成物不入库，Vercel 构建时 prisma generate 重新生成）
 
 ### 库位绑定语义（无流水表设计）与两段式流程
 
