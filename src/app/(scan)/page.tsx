@@ -27,7 +27,7 @@ const JOBS = [
 
 export default function JobSelectPage() {
   return (
-    <div className="mx-auto flex h-full w-full max-w-md flex-col justify-center gap-3 p-4">
+    <div className="page-enter mx-auto flex h-full w-full max-w-md flex-col justify-center gap-3 p-4">
       <h1 className="px-1 pb-1 text-base font-medium text-muted-foreground">选择作业</h1>
 
       {/* 可用作业：大主卡——戴手套低头一眼点中；未上线：压缩单行不抢焦点 */}

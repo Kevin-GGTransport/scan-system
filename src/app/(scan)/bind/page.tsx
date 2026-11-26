@@ -31,7 +31,7 @@ export default function BindBinPage() {
   );
 
   return (
-    <div className="relative flex h-full flex-col gap-3 p-3">
+    <div className="page-enter relative flex h-full flex-col gap-3 p-3">
       {flash ? (
         <div
           key={flash.id}

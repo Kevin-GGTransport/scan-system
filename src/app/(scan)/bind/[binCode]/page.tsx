@@ -119,7 +119,7 @@ export default function BindScanPage({ params }: { params: Promise<{ binCode: st
   const total = counts.ok + counts.warn + counts.error
 
   return (
-    <div className="relative flex h-full flex-col gap-3 p-3">
+    <div className="page-enter relative flex h-full flex-col gap-3 p-3">
       {flash ? (
         <div
           key={flash.id}

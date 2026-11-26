@@ -11,7 +11,7 @@ export default function LoginPage() {
   const warehouses = getDbInstances().map((i) => ({ key: i.key, label: i.label }));
 
   return (
-    <div className="flex h-dvh flex-col items-center justify-center gap-7 px-6 pb-10">
+    <div className="page-enter flex h-dvh flex-col items-center justify-center gap-7 px-6 pb-10">
       <div className="flex flex-col items-center gap-2">
         <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-hivis/40 bg-hivis/10">
           <ScanLine className="h-8 w-8 text-hivis" aria-hidden />
