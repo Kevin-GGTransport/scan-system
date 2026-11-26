@@ -8,6 +8,13 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Warehouse } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function LoginForm({
   warehouses,
@@ -50,37 +57,24 @@ export function LoginForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full max-w-sm flex-col gap-4">
-      {/* 仓库选择器（= 数据库）：本页唯一的"单选大按钮" */}
+      {/* 仓库选择器（= 数据库）：下拉，仓库数量增长不受排版限制 */}
       <fieldset className="flex flex-col gap-2">
-        <legend className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+        <label htmlFor="warehouse-select" className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
           <Warehouse className="h-3.5 w-3.5" aria-hidden />
           仓库
-        </legend>
-        <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="选择仓库">
-          {warehouses.map((wh, index) => {
-            const active = wh.key === dbKey;
-            // 奇数个时最后一个跨满行，避免孤零零占半格
-            const span = warehouses.length % 2 === 1 && index === warehouses.length - 1 ? "col-span-2 " : "";
-            return (
-              <button
-                key={wh.key}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                onClick={() => setDbKey(wh.key)}
-                className={
-                  span +
-                  "h-14 rounded-lg border text-base font-semibold touch-manipulation active:scale-[0.99] transition-colors " +
-                  (active
-                    ? "border-hivis bg-hivis text-primary-foreground"
-                    : "border-border bg-card text-foreground/80 hover:border-border")
-                }
-              >
+        </label>
+        <Select value={dbKey} onValueChange={setDbKey}>
+          <SelectTrigger id="warehouse-select" className="h-14! w-full rounded-lg border-border bg-card px-4 text-base font-semibold">
+            <SelectValue placeholder="选择仓库" />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            {warehouses.map((wh) => (
+              <SelectItem key={wh.key} value={wh.key} className="text-base">
                 {wh.label}
-              </button>
-            );
-          })}
-        </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <p className="text-xs text-muted-foreground">登录后本次作业读写该仓库的数据库</p>
       </fieldset>
 
