@@ -46,8 +46,18 @@ async function seedOne(prisma: PrismaClient, warehouseId: bigint): Promise<void>
     })
   }
 
-  // ── 清掉旧测试订单（子表随外键级联） ──────────────────
-  await prisma.orders.deleteMany({ where: { order_number: TEST_ORDER_NUMBER } })
+  // ── 清掉旧测试订单（SAV/LA 的外键无 ON DELETE CASCADE，须按序手删子行） ──
+  const oldOrders = await prisma.orders.findMany({
+    where: { order_number: TEST_ORDER_NUMBER },
+    select: { order_id: true },
+  })
+  const oldOrderIds = oldOrders.map((o) => o.order_id)
+  if (oldOrderIds.length > 0) {
+    await prisma.inventory_lots.deleteMany({ where: { order_id: { in: oldOrderIds } } })
+    await prisma.inbound_receipt.deleteMany({ where: { order_id: { in: oldOrderIds } } })
+    await prisma.order_detail.deleteMany({ where: { order_id: { in: oldOrderIds } } })
+    await prisma.orders.deleteMany({ where: { order_id: { in: oldOrderIds } } })
+  }
 
   // ── 仓点：ONT8 用既有行（找不到则造） ─────────────────
   let ont8 = await prisma.locations.findFirst({

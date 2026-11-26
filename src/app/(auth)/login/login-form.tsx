@@ -57,8 +57,10 @@ export function LoginForm({
           仓库
         </legend>
         <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="选择仓库">
-          {warehouses.map((wh) => {
+          {warehouses.map((wh, index) => {
             const active = wh.key === dbKey;
+            // 奇数个时最后一个跨满行，避免孤零零占半格
+            const span = warehouses.length % 2 === 1 && index === warehouses.length - 1 ? "col-span-2 " : "";
             return (
               <button
                 key={wh.key}
@@ -67,6 +69,7 @@ export function LoginForm({
                 aria-checked={active}
                 onClick={() => setDbKey(wh.key)}
                 className={
+                  span +
                   "h-14 rounded-lg border text-base font-semibold touch-manipulation active:scale-[0.99] transition-colors " +
                   (active
                     ? "border-hivis bg-hivis text-primary-foreground"
