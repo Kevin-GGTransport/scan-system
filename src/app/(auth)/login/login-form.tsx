@@ -51,7 +51,7 @@ export function LoginForm({
   return (
     <form onSubmit={handleSubmit} className="flex w-full max-w-sm flex-col gap-4">
       {/* 仓库选择器（= 数据库）：本页唯一的"单选大按钮" */}
-      <fieldset className="flex flex-col gap-1.5">
+      <fieldset className="flex flex-col gap-2">
         <legend className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
           <Warehouse className="h-3.5 w-3.5" aria-hidden />
           仓库
@@ -69,8 +69,8 @@ export function LoginForm({
                 className={
                   "h-14 rounded-lg border text-base font-semibold touch-manipulation active:scale-[0.99] transition-colors " +
                   (active
-                    ? "border-hivis bg-hivis/15 text-hivis"
-                    : "border-border bg-card text-muted-foreground hover:text-foreground")
+                    ? "border-hivis bg-hivis text-primary-foreground"
+                    : "border-border bg-card text-foreground/80 hover:border-border")
                 }
               >
                 {wh.label}
@@ -78,7 +78,7 @@ export function LoginForm({
             );
           })}
         </div>
-        <p className="text-[11px] text-muted-foreground">登录后本次作业读写该仓库的数据库</p>
+        <p className="text-xs text-muted-foreground">登录后本次作业读写该仓库的数据库</p>
       </fieldset>
 
       <div className="flex flex-col gap-1.5">

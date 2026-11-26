@@ -182,8 +182,10 @@ export function Scanner({ onResult, dedupMs = 2500, hint, className }: ScannerPr
         </div>
       </div>
       {hint ? (
-        <p className="pointer-events-none absolute inset-x-0 top-3 text-center text-sm font-medium text-white/90 drop-shadow">
-          {hint}
+        <p className="pointer-events-none absolute inset-x-0 top-3 flex justify-center">
+          <span className="rounded-full bg-black/55 px-3.5 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
+            {hint}
+          </span>
         </p>
       ) : null}
 
@@ -227,14 +229,16 @@ export function Scanner({ onResult, dedupMs = 2500, hint, className }: ScannerPr
             }
             setAttempt((a) => a + 1)
           }}
-          className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/80 text-center touch-manipulation active:scale-[0.99]"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/80 text-center touch-manipulation"
         >
-          <span className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-hivis text-hivis">
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-hivis/60 text-hivis/80">
             <ScanLine className="h-10 w-10" aria-hidden />
           </span>
-          <span className="text-lg font-semibold">点按启动相机</span>
-          <span className="px-8 text-sm text-muted-foreground">
-            切后台/截屏后相机会被系统挂断，点这里重新拉起
+          <span className="flex h-14 items-center justify-center rounded-xl bg-hivis px-8 text-lg font-bold text-primary-foreground active:scale-[0.98]">
+            点按启动相机
+          </span>
+          <span className="px-8 text-xs text-muted-foreground">
+            切后台 / 截屏后相机被系统挂断，点这里重新拉起
           </span>
         </button>
       ) : null}

@@ -50,3 +50,4 @@ certs/
 src/lib/generated/
 .playwright-mcp/
 verify-*.png
+opt-*.png

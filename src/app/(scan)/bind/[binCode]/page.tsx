@@ -134,14 +134,16 @@ export default function BindScanPage({ params }: { params: Promise<{ binCode: st
       <div className="flex items-stretch gap-2">
         <div className="flex min-w-0 flex-1 overflow-hidden rounded-lg border border-border bg-card">
           <div className="w-2 shrink-0 bg-hivis" aria-hidden />
-          <div className="flex min-w-0 flex-1 items-baseline justify-between gap-3 px-3.5 py-2">
+          <div className="flex min-w-0 flex-1 items-center justify-between gap-3 px-3.5 py-2">
             <div className="min-w-0">
               <p className="text-[10px] text-muted-foreground">锁定库位</p>
               <p className="font-code truncate text-2xl font-bold leading-tight">{binCode ?? "…"}</p>
             </div>
-            <span className="shrink-0 text-xs text-muted-foreground">
-              {occupants !== null ? `在库 ${occupants} 批` : ""}
-            </span>
+            {occupants !== null ? (
+              <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-foreground/80">
+                在库 {occupants} 批
+              </span>
+            ) : null}
           </div>
         </div>
         <Button
@@ -153,7 +155,7 @@ export default function BindScanPage({ params }: { params: Promise<{ binCode: st
         </Button>
         <Button
           variant="secondary"
-          className="h-auto min-h-14 px-4 text-sm"
+          className="h-auto min-h-14 border-signal-stop/40 px-4 text-sm text-signal-stop hover:bg-signal-stop/10"
           onClick={() => setSummaryOpen(true)}
         >
           结束
@@ -172,12 +174,16 @@ export default function BindScanPage({ params }: { params: Promise<{ binCode: st
           <div className="flex items-start gap-3">
             <LastIcon className={cn("mt-0.5 h-7 w-7 shrink-0", OUTCOME_COLORS[lastKind])} aria-hidden />
             <div className="min-w-0 flex-1">
-              <p className={cn("text-base font-semibold leading-snug", OUTCOME_COLORS[lastKind])}>
+              {last.data?.container ? (
+                <p className="font-code truncate text-xl font-bold leading-tight text-foreground">
+                  {last.data.container}
+                </p>
+              ) : null}
+              <p className={cn("mt-0.5 text-base font-semibold leading-snug", OUTCOME_COLORS[lastKind])}>
                 {last.message}
               </p>
               {last.data?.container ? (
                 <p className="mt-1 flex flex-wrap items-baseline gap-x-3 text-sm text-muted-foreground">
-                  <span className="font-code text-base text-foreground">{last.data.container}</span>
                   {last.data.destinationCode ?? last.data.destinationName ? (
                     <span>{last.data.destinationCode ?? last.data.destinationName}</span>
                   ) : null}
@@ -205,7 +211,7 @@ export default function BindScanPage({ params }: { params: Promise<{ binCode: st
         <span className="rounded-md bg-signal-stop/15 px-2.5 py-1 font-medium text-signal-stop">
           异常 {counts.error}
         </span>
-        <span className="ml-auto text-xs text-muted-foreground">本次已扫 {total}</span>
+        <span className="ml-auto text-sm text-foreground/80">本次已扫 {total}</span>
       </div>
 
       {recent.length > 0 ? (

@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { ClipboardList, PackageOpen, Truck, Warehouse } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowRight, ClipboardList, PackageOpen, Truck, Warehouse } from "lucide-react";
 
 const JOBS = [
   {
@@ -28,46 +27,41 @@ const JOBS = [
 
 export default function JobSelectPage() {
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col gap-3 p-4">
-      <h1 className="px-1 pt-2 text-base font-medium text-muted-foreground">选择作业</h1>
+    <div className="mx-auto flex h-full w-full max-w-md flex-col justify-center gap-3 p-4">
+      <h1 className="px-1 pb-1 text-base font-medium text-muted-foreground">选择作业</h1>
+
+      {/* 可用作业：大主卡——戴手套低头一眼点中；未上线：压缩单行不抢焦点 */}
       {JOBS.map((job) => {
         const Icon = job.icon;
-        const content = (
+        if (job.enabled) {
+          return (
+            <Link key={job.href} href={job.href} className="touch-manipulation active:scale-[0.99]">
+              <div className="flex min-h-28 items-center gap-4 rounded-xl border border-hivis/50 bg-card px-5 py-5 shadow-lg shadow-black/30">
+                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-hivis text-primary-foreground">
+                  <Icon className="h-8 w-8" aria-hidden />
+                </span>
+                <span className="flex min-w-0 flex-col gap-1">
+                  <span className="text-xl font-bold">{job.title}</span>
+                  <span className="text-sm text-muted-foreground">{job.description}</span>
+                </span>
+                <ArrowRight className="ml-auto h-6 w-6 shrink-0 text-hivis" aria-hidden />
+              </div>
+            </Link>
+          );
+        }
+        return (
           <div
-            className={cn(
-              "flex min-h-24 items-center gap-4 rounded-xl border bg-card px-5 py-4 touch-manipulation",
-              job.enabled
-                ? "border-border active:scale-[0.99]"
-                : "border-border/50 opacity-45"
-            )}
+            key={job.href}
+            aria-disabled
+            className="flex min-h-14 items-center gap-3 rounded-xl border border-border/50 bg-card/40 px-4 py-3 opacity-45"
           >
-            <span
-              className={cn(
-                "flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border",
-                job.enabled ? "border-hivis/40 text-hivis" : "border-border text-muted-foreground"
-              )}
-            >
-              <Icon className="h-7 w-7" aria-hidden />
+            <Icon className="h-5 w-5 shrink-0" aria-hidden />
+            <span className="text-sm font-medium">{job.title}</span>
+            <span className="truncate text-xs text-muted-foreground">{job.description}</span>
+            <span className="ml-auto flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
+              <PackageOpen className="h-3.5 w-3.5" aria-hidden />
+              未上线
             </span>
-            <span className="flex flex-col">
-              <span className="text-lg font-semibold">{job.title}</span>
-              <span className="text-sm text-muted-foreground">{job.description}</span>
-            </span>
-            {job.enabled ? null : (
-              <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
-                <PackageOpen className="h-4 w-4" aria-hidden />
-                未上线
-              </span>
-            )}
-          </div>
-        );
-        return job.enabled ? (
-          <Link key={job.href} href={job.href}>
-            {content}
-          </Link>
-        ) : (
-          <div key={job.href} aria-disabled>
-            {content}
           </div>
         );
       })}
