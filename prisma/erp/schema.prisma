@@ -1,0 +1,147 @@
+// ERP 表视图（introspection 子集，手工维护）
+//
+// ⚠️ 本文件只 `prisma generate`，**永不 migrate**：表归 G-G_CoreFlow_ERP 所有，
+// scan-system 只读写。ERP 改表后：cp 本文件为 _pull.prisma（加 datasource）→
+// `prisma db pull --schema prisma/erp/_pull.prisma` → diff 后手工同步本文件。
+//
+// 只保留 scan-system 用到的字段；被省略的列对 client 不可见（读写均安全）。
+// 跨 schema 引用沿用 ERP 惯例（关系仅在真实 FK 存在处声明）。
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/lib/generated/prisma-erp"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public", "wms"]
+}
+
+/// 登录账号（与 ERP 共用；工人账号经 personnel_id 关联 personnel 档案）
+model users {
+  id                   BigInt   @id @default(autoincrement())
+  username             String   @unique @db.VarChar(50)
+  password_hash        String   @db.VarChar(255)
+  full_name            String?  @db.VarChar(100)
+  role                 String?  @default("employee") @db.VarChar(50)
+  status               String?  @default("active") @db.VarChar(20)
+  default_warehouse_id BigInt?
+  personnel_id         BigInt?
+
+  @@schema("public")
+}
+
+model orders {
+  order_id     BigInt  @id @default(autoincrement())
+  order_number String  @db.VarChar(50)
+  warehouse_id BigInt?
+  order_date   DateTime @db.Date
+  total_amount Decimal  @db.Decimal(12, 2)
+  final_amount Decimal  @db.Decimal(12, 2)
+  order_detail order_detail[]
+
+  @@schema("public")
+}
+
+model order_detail {
+  id                  BigInt     @id @default(autoincrement())
+  order_id            BigInt?
+  detail_id           BigInt?
+  quantity            Int
+  estimated_pallets   Int?
+  po                  String?    @db.Text
+  notes               String?
+  delivery_nature     String?    @db.VarChar(50)
+  delivery_location_id BigInt?
+  orders              orders?    @relation(fields: [order_id], references: [order_id])
+  locations           locations? @relation(fields: [delivery_location_id], references: [location_id])
+  inventory_lots      inventory_lots[]
+  outbound_shipment_lines outbound_shipment_lines[]
+
+  @@schema("public")
+}
+
+model locations {
+  location_id   BigInt  @id @default(autoincrement())
+  location_code String? @db.VarChar(50)
+  warehouse_id  BigInt?
+  name          String? @db.VarChar(200)
+  location_type String  @db.VarChar(50)
+  state         String? @db.VarChar(100)
+  postal_code   String? @db.VarChar(20)
+  order_detail  order_detail[]
+
+  @@schema("public")
+}
+
+model inbound_receipt {
+  inbound_receipt_id BigInt   @id @default(autoincrement())
+  order_id           BigInt   @unique
+  warehouse_id       BigInt
+  status             String   @default("pending") @db.VarChar(50)
+  planned_unload_at  DateTime? @db.Date
+  inventory_lots     inventory_lots[]
+
+  @@schema("wms")
+}
+
+model inventory_lots {
+  inventory_lot_id      BigInt   @id @default(autoincrement())
+  warehouse_id          BigInt
+  storage_location_code String?  @db.VarChar(100)
+  status                String?  @default("available") @db.VarChar(50)
+  order_id              BigInt
+  order_detail_id       BigInt
+  inbound_receipt_id    BigInt?
+  lot_number            String?  @db.VarChar(50)
+  received_date         DateTime? @db.Date
+  pallet_count          Int?
+  actual_box_count      Int?
+  created_at            DateTime @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime @default(now()) @db.Timestamptz(6)
+  created_by            BigInt?
+  updated_by            BigInt?
+  inbound_receipt       inbound_receipt? @relation(fields: [inbound_receipt_id], references: [inbound_receipt_id])
+  order_detail          order_detail     @relation(fields: [order_detail_id], references: [id])
+
+  @@schema("wms")
+}
+
+model outbound_shipments {
+  outbound_shipment_id    BigInt  @id @default(autoincrement())
+  warehouse_id            BigInt
+  status                  String? @db.VarChar(50)
+  actual_load_time        DateTime? @db.Timestamptz(6)
+  appointment_id          BigInt? @unique
+  outbound_shipment_lines outbound_shipment_lines[]
+
+  @@schema("wms")
+}
+
+model outbound_shipment_lines {
+  outbound_shipment_line_id BigInt  @id @default(autoincrement())
+  outbound_shipment_id      BigInt?
+  order_id                  BigInt
+  order_detail_id           BigInt
+  quantity                  Int     @default(1)
+  order_detail              order_detail        @relation(fields: [order_detail_id], references: [id])
+  outbound_shipments        outbound_shipments? @relation(fields: [outbound_shipment_id], references: [outbound_shipment_id])
+
+  @@schema("wms")
+}
+
+model bin_locations {
+  bin_location_id BigInt   @id @default(autoincrement())
+  bin_code        String   @unique @db.VarChar(50)
+  warehouse_id    BigInt?
+  notes           String?  @db.VarChar(200)
+  is_active       Boolean  @default(true)
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime @default(now()) @db.Timestamptz(6)
+  created_by      BigInt?
+  updated_by      BigInt?
+
+  @@index([warehouse_id], map: "idx_bin_locations_warehouse_id")
+  @@schema("wms")
+}

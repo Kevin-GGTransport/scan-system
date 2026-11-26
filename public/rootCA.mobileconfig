@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadContent</key>
+			<data>
+			MIIE7DCCA1SgAwIBAgIRAOtSrYZu2MTNtNJ9JKIj+LkwDQYJKoZI
+			hvcNAQELBQAwgY0xHjAcBgNVBAoTFW1rY2VydCBkZXZlbG9wbWVu
+			dCBDQTExMC8GA1UECwwoemhhbmdmdWxhaUB6aGFuZ2Z1bGFpZGVN
+			YWNCb29rLVByby5sb2NhbDE4MDYGA1UEAwwvbWtjZXJ0IHpoYW5n
+			ZnVsYWlAemhhbmdmdWxhaWRlTWFjQm9vay1Qcm8ubG9jYWwwHhcN
+			MjYxMTI1MDU0MzQ4WhcNMzYxMTI1MDU0MzQ4WjCBjTEeMBwGA1UE
+			ChMVbWtjZXJ0IGRldmVsb3BtZW50IENBMTEwLwYDVQQLDCh6aGFu
+			Z2Z1bGFpQHpoYW5nZnVsYWlkZU1hY0Jvb2stUHJvLmxvY2FsMTgw
+			NgYDVQQDDC9ta2NlcnQgemhhbmdmdWxhaUB6aGFuZ2Z1bGFpZGVN
+			YWNCb29rLVByby5sb2NhbDCCAaIwDQYJKoZIhvcNAQEBBQADggGP
+			ADCCAYoCggGBALYGk8f7QerisT8jctH2pjUjIJ6lyQzIpzFhp0FE
+			9f5l5og/HVlEkznmsm6XsjHVb1kB62UBmtsnKlg5tkTvm4kLsj/W
+			9pTU2E4VdLGhF2SepUrbPqy2nuWo+RlwoUybYz45CPj0wYqKFHxM
+			4gOWxwp+ZDtmqViRPQSiH+qAdj0jFXTbiOPyjEb58ZPK02S0m+VL
+			7uObSNbBGAQUFf6tKQfmPM9vVHZEguUWEsGxdC16gM+HMFDU+QZB
+			cySDEYro0I3uIpmSpMWXze8E6aGWBDpN+hNnvqia1FUzTtDSw4j8
+			wuB51L9+44MznMBb1hToU0e9ez829g4+bjDoWudSsCpyynI7/d4C
+			XLVXPrBL2APJ/vmhGpJSFtK20tGbZlp21x91i+W5jjQAZjwCchHK
+			qPUwc6id9XoTnHB7rj3Hw6uE21hMl6OItTT4T9EYIMF8mcM+RdBP
+			MC01YVtc4JJR8SfUGi3Z1HPGjGUG9tsrPU83ItE6bDL+3bKqDMr+
+			HTdmSwIDAQABo0UwQzAOBgNVHQ8BAf8EBAMCAgQwEgYDVR0TAQH/
+			BAgwBgEB/wIBADAdBgNVHQ4EFgQUiMxFFUxUYCa2j5s6eC0tTRIx
+			9OwwDQYJKoZIhvcNAQELBQADggGBAJiA/AHeS+aovrXoINyoqJvg
+			MJLz2KE5gcqNFOS0qVnMz+6L07hb1Ht5yuZqWvYrO++UU+gyWpOl
+			Ym/G0mGPbfwmDkZCWKF3/q4FlemOGc2Pj055upjG4EwfMCZaYQdj
+			4bF+LNI8EH1aNobLd0uGXlfjUgbz2Nn5o+/SWU9ZkmXyG05AKwVe
+			W4UZSU8+WZqD6tLVYl7vngHr7EIBeWueQrGYugANqmBsEcjsoOPy
+			PHifmDO28PzoyBCe6BG0YrseeqyUodxfmB5jGcJLdTwkhkcFLfKP
+			+hhB9hcxtuAVhTznP3RXyTj3yOqDpGx4zf/5u2AoaDXQdqb1eAoO
+			ckBFFhwWhyCbQIuMxiN2/Q4Nw26xsOVZA3sVE04ctn6nJf/0zrIa
+			fCJtIPp5F9UOoNi9srVUPuvzKd2Yr+IyXOeh5VVDY/VuMo9cIYKr
+			Fasl+AIUduAHFWpm4F6Ng/h8g1IMwHs9T1Y50xm4YWDyGZcMMBQ1
+			vIefvOfrNIAN7DNESaN0ew==
+			</data>
+			<key>PayloadDisplayName</key>
+			<string>GNG 扫码测试 CA</string>
+			<key>PayloadIdentifier</key>
+			<string>com.gng.scan.rootca</string>
+			<key>PayloadType</key>
+			<string>com.apple.security.root</string>
+			<key>PayloadUUID</key>
+			<string>af388f15-378b-4155-92cb-ab67070ddc0c</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>本地开发用根证书：装完并信任后 iPhone 才允许相机</string>
+	<key>PayloadDisplayName</key>
+	<string>GNG 扫码证书</string>
+	<key>PayloadIdentifier</key>
+	<string>com.gng.scan</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>e2418c0c-d3b4-4bbd-837e-5b16a90a4fe1</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

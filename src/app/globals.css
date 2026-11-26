@@ -1,0 +1,178 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-signal-ok: var(--signal-ok);
+  --color-signal-warn: var(--signal-warn);
+  --color-signal-stop: var(--signal-stop);
+  --color-hivis: var(--hivis);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * 工业暗色 HMI：仓库夜班/暗环境，本应用永远深色（不做亮色切换）。
+ * 三色信号系统承担 outcome 语义：绿=通过、琥珀=注意、红=停止；
+ * 安全黄（货架端/警戒线同源）只用于当前库位牌与焦点环。
+ */
+:root {
+  --background: #101418;
+  --foreground: #e8edf2;
+  --card: #1a2128;
+  --card-foreground: #e8edf2;
+  --popover: #1a2128;
+  --popover-foreground: #e8edf2;
+  --primary: #ffd60a;
+  --primary-foreground: #101418;
+  --secondary: #2a343d;
+  --secondary-foreground: #e8edf2;
+  --muted: #232c35;
+  --muted-foreground: #8fa0ad;
+  --accent: #2a343d;
+  --accent-foreground: #e8edf2;
+  --destructive: #ff5c5c;
+  --border: #2a343d;
+  --input: #2a343d;
+  --ring: #ffd60a;
+  --chart-1: #2fd07a;
+  --chart-2: #ffb020;
+  --chart-3: #ff5c5c;
+  --chart-4: #8fa0ad;
+  --chart-5: #e8edf2;
+  --radius: 0.5rem;
+  --sidebar: #1a2128;
+  --sidebar-foreground: #e8edf2;
+  --sidebar-primary: #ffd60a;
+  --sidebar-primary-foreground: #101418;
+  --sidebar-accent: #2a343d;
+  --sidebar-accent-foreground: #e8edf2;
+  --sidebar-border: #2a343d;
+  --sidebar-ring: #ffd60a;
+
+  --signal-ok: #2fd07a;
+  --signal-warn: #ffb020;
+  --signal-stop: #ff5c5c;
+  --hivis: #ffd60a;
+
+  --font-sans: var(--font-geist-sans), var(--font-noto-sc), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+.dark {
+  --background: #101418;
+  --foreground: #e8edf2;
+  --card: #1a2128;
+  --card-foreground: #e8edf2;
+  --popover: #1a2128;
+  --popover-foreground: #e8edf2;
+  --primary: #ffd60a;
+  --primary-foreground: #101418;
+  --secondary: #2a343d;
+  --secondary-foreground: #e8edf2;
+  --muted: #232c35;
+  --muted-foreground: #8fa0ad;
+  --accent: #2a343d;
+  --accent-foreground: #e8edf2;
+  --destructive: #ff5c5c;
+  --border: #2a343d;
+  --input: #2a343d;
+  --ring: #ffd60a;
+  --chart-1: #2fd07a;
+  --chart-2: #ffb020;
+  --chart-3: #ff5c5c;
+  --chart-4: #8fa0ad;
+  --chart-5: #e8edf2;
+  --sidebar: #1a2128;
+  --sidebar-foreground: #e8edf2;
+  --sidebar-primary: #ffd60a;
+  --sidebar-primary-foreground: #101418;
+  --sidebar-accent: #2a343d;
+  --sidebar-accent-foreground: #e8edf2;
+  --sidebar-border: #2a343d;
+  --sidebar-ring: #ffd60a;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* 码号/计数统一等宽（防 0/O 误读） */
+.font-code {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+}
+
+/* 签名元素：扫码判定瞬间整屏边框闪对应色（screen-as-gauge） */
+@keyframes outcome-flash {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.outcome-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 6px var(--flash-color, var(--signal-ok));
+  animation: outcome-flash 450ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .outcome-flash {
+    animation-duration: 120ms;
+  }
+}
